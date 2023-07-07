@@ -1,0 +1,79 @@
+class Solution {
+public:
+    // int ans=INT_MIN;
+    // void help(int i, int k , string& st){
+    //     if(i==st.length() || k==0){
+    //         int count=1;
+    //         int aux=1;
+    //         for(int j=0;j<st.length()-1;j++){
+    //             if(st[j]==st[j+1]){
+    //                 aux++;
+    //             }
+    //             else{
+    //                 count=max(aux,count);
+    //                 aux=1;
+    //             }
+    //         }
+    //         count=max(aux,count);
+    //         ans=max(ans,count);
+    //         return ;
+    //     }
+    //     char ch=st[i];
+    //     (ch=='T')? st[i]='F':st[i]='T';
+    //     help(i+1,k-1,st);
+    //     st[i]=ch;
+    //     help(i+1,k,st);
+    //     return;
+    // }
+    int maxConsecutiveAnswers(string st, int k) {
+        // help(0,k,answerKey);
+        // return ans;
+
+        // binary search+ fixed length sliding window
+        // int start=0;
+        // int end=st.length();
+        // int ans=1;
+        // while(start<=end){
+        //     int mid=(start+end)/2;
+        //     int countT=0;
+        //     int countF=0;
+        //     int j=0;
+        //     int i=0;
+        //     while(j<st.length()){
+        //         (st[j]=='T')? countT++:countF++;
+        //         if(j-i+1==mid){
+        //             if(min(countT,countF)<=k){
+        //                  ans=max(ans,mid);
+        //             }
+        //             (st[i]=='T')? countT--:countF--;
+        //             i++;
+        //         }
+        //         j++;
+        //     }
+        //     if(ans==mid){
+        //         start=mid+1;
+        //     }
+        //     else{
+        //         end=mid-1;
+        //     }
+        // }
+        // return ans;
+
+
+        //variable length sliding window
+          int countT=0,countF=0,i=0,j=0,ans=1;
+          
+          while(j<st.length()){
+               (st[j]=='T')? countT++:countF++;
+               if(min(countT,countF)<=k){
+                   ans=max(ans,j-i+1);
+                } 
+                while(min(countT,countF)>k) {
+                 (st[i]=='T')? countT--:countF--;
+                    i++;   
+                }
+                j++;
+          }
+          return ans;
+    }
+};
